@@ -250,6 +250,10 @@ bioinfotongli/bioformats2raw:
   - modules/bioinfotongli/bioformats2raw/**
   - tests/modules/bioinfotongli/bioformats2raw/**
 
+bioinfotongli/raw2ometiff:
+  - modules/bioinfotongli/raw2ometiff/**
+  - tests/modules/bioinfotongli/raw2ometiff/**
+
 biscuit/align:
   - modules/biscuit/index/**
   - modules/biscuit/align/**
