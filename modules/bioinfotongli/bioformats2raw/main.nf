@@ -23,10 +23,12 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
     //               Software MUST be pinned to channel (i.e. "bioconda"), version (i.e. "1.10").
     //               For Conda, the build (i.e. "h9402c20_2") must be EXCLUDED to support installation on different operating systems.
     // TODO nf-core: See section in main README for further information regarding finding and adding container addresses to the section below.
-    conda (params.enable_conda ? "-c ome/label/pre bioformats2raw==0.5.0rc1" : null)
+    conda (params.enable_conda ? "bioformats2raw" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/YOUR-TOOL-HERE':
-        'quay.io/bioinfotongli/bioformats2raw:0.5.0rc1' }"
+        '/lustre/scratch117/cellgen/team283/imaging_sifs/bf2raw-0.5.0rc1.sif':
+        'openmicroscopy/bioformats2raw:latest'}"
+        /*'https://depot.galaxyproject.org/singularity/YOUR-TOOL-HERE':*/
+        /*'openmicroscopy/bioformats2raw:0.5.0rc1' }"*/
 
     input:
     // TODO nf-core: Where applicable all sample-specific information e.g. "id", "single_end", "read_group"
@@ -60,6 +62,7 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
     // TODO nf-core: Please replace the example samtools command below with your module's command
     // TODO nf-core: Please indent the command appropriately (4 spaces!!) to help with readability ;)
     """
+    # /opt/conda/bin/bioformats2raw \\
     /opt/bioformats2raw/bin/bioformats2raw \\
         $args \\
         $img \\
