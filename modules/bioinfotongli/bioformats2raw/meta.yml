@@ -6,7 +6,7 @@ keywords:
   - image_format
 tools:
   - "bioinfotongli":
-      description: "Modules that are reusable for daily bioimage analysis"
+      description: "An any-image-to-zarr convertor"
       homepage: ""
       documentation: ""
       tool_dev_url: ""
@@ -17,7 +17,7 @@ input:
   - img:
       type: file
       description: Any image file supported by bioformats2raw
-      pattern: "*.{tif,tiff,png,jpg,ndpi}"
+      pattern: "*.{tif,tiff,png,jpg,ndpi,czi}" # and others, see: https://docs.openmicroscopy.org/bio-formats/5.8.2/supported-formats.html
 
 output:
   #
@@ -28,7 +28,7 @@ output:
   - zarr:
       type: path
       description: input image in converted to zarr folder
-      pattern: "*.{zarr}"
+      pattern: "*.{zarr}" # https://ngff.openmicroscopy.org/latest/
 
 authors:
   - "@BioinfoTongLI"
