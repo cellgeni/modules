@@ -44,6 +44,6 @@ workflow TILED_SEGMENTATION {
     ch_versions = ch_versions.mix(MERGEOUTLINES.out.versions.first())
 
     emit:
-    wkt         = MERGEOUTLINES.out.multipoly_geojsons   // channel: [ val(meta), [ geojson ] ]
+    geojson         = MERGEOUTLINES.out.multipoly_geojsons   // channel: [ val(meta), [ geojson ] ]
     versions    = ch_versions                     // channel: [ versions.yml ]
 }
