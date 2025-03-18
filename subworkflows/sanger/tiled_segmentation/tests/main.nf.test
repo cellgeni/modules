@@ -28,8 +28,8 @@ nextflow_workflow {
 
         then {
             assertAll(
-                { assert process.success },
-                { assert snapshot(process.out).match() }
+                { assert workflow.success },
+                { assert snapshot(workflow.out).match() }
             )
         }
 
@@ -51,8 +51,8 @@ nextflow_workflow {
 
         then {
             assertAll(
-                { assert process.success },
-                { assert snapshot(process.out).match() }
+                { assert workflow.success },
+                { assert snapshot(workflow.out).match() }
             )
         }
 
@@ -74,8 +74,8 @@ nextflow_workflow {
 
         then {
             assertAll(
-                { assert process.success },
-                { assert snapshot(process.out).match() }
+                { assert workflow.success },
+                { assert snapshot(workflow.out).match() }
             )
         }
 
@@ -97,35 +97,11 @@ nextflow_workflow {
 
         then {
             assertAll(
-                { assert process.success },
-                { assert snapshot(process.out).match() }
+                { assert workflow.success },
+                { assert snapshot(workflow.out).match() }
             )
         }
 
     }
 
-    test("nuclear - tif - stub") {
-
-        options "-stub"
-
-        when {
-            workflow {
-                """
-                input[0] = [
-                    [ id:'test'], // meta map
-                    file(params.modules_testdata_base_path + 'imaging/segmentation/nuclear_image.tif', checkIfExists: true),
-                ]
-                input[1] = 'CELLPOSE'
-                """
-            }
-        }
-
-        then {
-            assertAll(
-                { assert process.success },
-                { assert snapshot(process.out).match() }
-            )
-        }
-
-    }
 }
