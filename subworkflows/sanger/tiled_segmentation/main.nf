@@ -13,14 +13,13 @@ workflow TILED_SEGMENTATION {
 
     main:
     ch_versions = Channel.empty()
-    ch_images = Channel.of(images)
-    GENERATE_TILE_COORDS(ch_images)
+    GENERATE_TILE_COORDS(images)
     ch_versions = ch_versions.mix(GENERATE_TILE_COORDS.out.versions.first())
 
     images_tiles = GENERATE_TILE_COORDS.out.tile_coords.splitCsv(header:true, sep:",").map{ meta, coords ->
         [meta, coords.X_MIN, coords.Y_MIN, coords.X_MAX, coords.Y_MAX]
     }
-    tiles_and_images = images_tiles.combine(ch_images, by:0)
+    tiles_and_images = images_tiles.combine(images, by:0)
     if (method == "CELLPOSE") {
         CELLPOSE(tiles_and_images.combine(channel.from(params.cell_diameters)))
         wkts = CELLPOSE.out.wkts.groupTuple(by:0)
