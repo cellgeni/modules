@@ -17,10 +17,10 @@ nextflow_workflow {
             }
             workflow {
                 """
-                input[0] = [
+                input[0] = Channel.of([
                     [ id:'test'], // meta map
                     file(params.modules_testdata_base_path + 'imaging/segmentation/nuclear_image.tif', checkIfExists: true),
-                ]
+                ])
                 input[1] = 'CELLPOSE'
                 """
             }
@@ -40,10 +40,10 @@ nextflow_workflow {
         when {
             workflow {
                 """
-                input[0] = [
+                input[0] = Channel.of([
                     [ id:'test'], // meta map
                     file(params.modules_testdata_base_path + 'imaging/segmentation/nuclear_image.tif', checkIfExists: true),
-                ]
+                ])
                 input[1] = 'STARDIST'
                 """
             }
@@ -63,10 +63,10 @@ nextflow_workflow {
         when {
             workflow {
                 """
-                input[0] = [
+                input[0] = Channel.of([
                     [ id:'test'], // meta map
                     file(params.modules_testdata_base_path + 'imaging/segmentation/nuclear_image.tif', checkIfExists: true),
-                ]
+                ])
                 input[1] = 'INSTANSEG'
                 """
             }
@@ -86,10 +86,10 @@ nextflow_workflow {
         when {
             workflow {
                 """
-                input[0] = [
+                input[0] = Channel.of([
                     [ id:'test'], // meta map
                     file(params.modules_testdata_base_path + 'imaging/segmentation/nuclear_image.tif', checkIfExists: true),
-                ]
+                ])
                 input[1] = 'DEEPCELL'
                 """
             }
