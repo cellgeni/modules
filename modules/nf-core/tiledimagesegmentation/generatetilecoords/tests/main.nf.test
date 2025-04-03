@@ -7,6 +7,7 @@ nextflow_process {
     process "TILEDIMAGESEGMENTATION_GENERATETILECOORDS"
 
     tag "modules"
+    tag "modules_nfcore"
     tag "tiledimagesegmentation"
     tag "tiledimagesegmentation/generatetilecoords"
 
