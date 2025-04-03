@@ -8,7 +8,7 @@ keywords:
   - slicing
 tools:
   - "tiledimagesegmentation":
-      description: "A simple script to generate tiles from an 2D image file"
+      description: "A toolset for tiled image segmentation"
       homepage: ""
       documentation: ""
       tool_dev_url: ""
@@ -29,14 +29,13 @@ input:
         pattern: "*.{tif,ome.tif,ome.tiff}"
 
 output:
-  #Only when we have meta
   - - meta:
       type: map
       description: |
         Groovy Map containing sample information
         e.g. `[ id:'test' ]`
 
-    - tile_coords:
+    - "{output_name}":
         type: file
         description: a csv file contains the information of tiles
         pattern: "*.csv"
