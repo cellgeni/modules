@@ -1,15 +1,14 @@
-// nf-core modules test bioinfotongli/generatetiles
+// nf-core modules test tiledimagesegmentation/generatetilecoords
 nextflow_process {
 
-    name "Test Process BIOINFOTONGLI_GENERATETILES"
+    name "Test Process TILEDIMAGESEGMENTATION_GENERATETILECOORDS"
     script "../main.nf"
     config "./nextflow.config"
-    process "BIOINFOTONGLI_GENERATETILES"
+    process "TILEDIMAGESEGMENTATION_GENERATETILECOORDS"
 
     tag "modules"
-    tag "modules_sanger"
-    tag "bioinfotongli"
-    tag "bioinfotongli/generatetiles"
+    tag "tiledimagesegmentation"
+    tag "tiledimagesegmentation/generatetilecoords"
 
     test("mouse_heart - tiff") {
 
