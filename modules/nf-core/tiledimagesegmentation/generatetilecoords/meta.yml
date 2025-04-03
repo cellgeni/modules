@@ -7,7 +7,7 @@ keywords:
   - tiling
   - slicing
 tools:
-  - "bioinfotongli":
+  - "tiledimagesegmentation":
       description: "A simple script to generate tiles from an 2D image file"
       homepage: ""
       documentation: ""

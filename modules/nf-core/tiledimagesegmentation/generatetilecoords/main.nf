@@ -29,7 +29,7 @@ process TILEDIMAGESEGMENTATION_GENERATETILECOORDS {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(tile-2d-image version)
+        tile-2d-image: \$(tile-2d-image version)
     END_VERSIONS
     """
 
@@ -42,7 +42,7 @@ process TILEDIMAGESEGMENTATION_GENERATETILECOORDS {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(tile-2d-image version)
+        tile-2d-image: \$(tile-2d-image version)
     END_VERSIONS
     """
 }
