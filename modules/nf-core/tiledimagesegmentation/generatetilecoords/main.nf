@@ -4,8 +4,8 @@ process TILEDIMAGESEGMENTATION_GENERATETILECOORDS {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        "quay.io/cellgeni/imagetileprocessor:0.1.9":
-        "quay.io/cellgeni/imagetileprocessor:0.1.9"}"
+        "quay.io/cellgeni/imagetileprocessor:0.1.11":
+        "quay.io/cellgeni/imagetileprocessor:0.1.11"}"
 
     input:
     tuple val(meta), path(image)
