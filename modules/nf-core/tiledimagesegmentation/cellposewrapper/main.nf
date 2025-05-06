@@ -3,15 +3,14 @@ process TILEDIMAGESEGMENTATION_CELLPOSEWRAPPER {
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        "quay.io/cellgeni/tiled_cellpose:0.1.3":
-        "quay.io/cellgeni/tiled_cellpose:0.1.3"}"
+    container "quay.io/cellgeni/tiled_cellpose:0.1.3"
 
     input:
     tuple val(meta), val(x_min), val(y_min), val(x_max), val(y_max), path(image), val(cell_diameter)
 
     output:
     tuple val(meta), path("${prefix}/${prefix}_cp_outlines.wkt"), emit: wkts
+    tuple val(meta), path("${prefix}/*.png"), optional: true
     path "versions.yml"           , emit: versions
 
     when:
