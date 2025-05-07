@@ -1,7 +1,7 @@
 process TILEDIMAGESEGMENTATION_MERGEOUTLINES {
     tag "$meta.id"
 
-    container 'quay.io/cellgeni/imagetileprocessor:0.1.13'
+    container 'quay.io/cellgeni/imagetileprocessor:0.1.15'
 
     input:
     tuple val(meta), path(outlines)
