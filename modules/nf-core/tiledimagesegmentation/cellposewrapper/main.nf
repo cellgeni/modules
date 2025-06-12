@@ -1,5 +1,5 @@
 process TILEDIMAGESEGMENTATION_CELLPOSEWRAPPER {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
@@ -11,14 +11,14 @@ process TILEDIMAGESEGMENTATION_CELLPOSEWRAPPER {
     output:
     tuple val(meta), path("${prefix}/${prefix}_cp_outlines.wkt"), emit: wkts
     tuple val(meta), path("${prefix}/*.png"), optional: true
-    path "versions.yml"           , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
     prefix = "${meta.id}-${x_min}_${y_min}_${x_max}_${y_max}-diam_${cell_diameter}"
-    def args = task.ext.args ?: ''  
+    def args = task.ext.args ?: ''
     """
     export NUMBA_CACHE_DIR=./numba_cache
     cellpose_seg.py run \
@@ -36,7 +36,6 @@ process TILEDIMAGESEGMENTATION_CELLPOSEWRAPPER {
         TILEDIMAGESEGMENTATION_CELLPOSEWRAPPER : \$(echo \$(cellpose_seg.py version))
     END_VERSIONS
     """
-
 
     stub:
     def args = task.ext.args ?: ''

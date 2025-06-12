@@ -1,5 +1,5 @@
 process TILEDIMAGESEGMENTATION_STARDISTWRAPPER {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
@@ -11,14 +11,14 @@ process TILEDIMAGESEGMENTATION_STARDISTWRAPPER {
     output:
     tuple val(meta), path("${out_name}"), emit: wkts
     tuple val(meta), path("${stem}*png"), emit: cp_plots, optional: true
-    path "versions.yml"           , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
     stem = "${meta.id}-${x_min}_${y_min}_${x_max}_${y_max}"
-    def args = task.ext.args ?: ''  
+    def args = task.ext.args ?: ''
     out_name = "${stem}_cp_outlines.wkt"
     """
     export NUMBA_CACHE_DIR=/tmp/numba_cache

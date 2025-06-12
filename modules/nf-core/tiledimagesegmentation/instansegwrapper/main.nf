@@ -1,5 +1,5 @@
 process TILEDIMAGESEGMENTATION_INSTANSEGWRAPPER {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
@@ -10,7 +10,7 @@ process TILEDIMAGESEGMENTATION_INSTANSEGWRAPPER {
 
     output:
     tuple val(meta), path("${output_name}"), emit: wkts
-    path "versions.yml"           , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -27,7 +27,7 @@ process TILEDIMAGESEGMENTATION_INSTANSEGWRAPPER {
         -x-max ${x_max} \\
         -y-max ${y_max} \\
         -output_name ${output_name} \\
-        $args \\
+        ${args} \\
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

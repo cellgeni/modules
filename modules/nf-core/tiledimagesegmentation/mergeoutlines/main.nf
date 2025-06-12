@@ -1,5 +1,5 @@
 process TILEDIMAGESEGMENTATION_MERGEOUTLINES {
-    tag "$meta.id"
+    tag "${meta.id}"
 
     container 'quay.io/cellgeni/imagetileprocessor:0.1.15'
 
@@ -9,7 +9,7 @@ process TILEDIMAGESEGMENTATION_MERGEOUTLINES {
     output:
     tuple val(meta), path("${prefix}.geojson"), emit: multipoly_geojsons
     tuple val(meta), path("${prefix}.wkt"), emit: multipoly_wkts, optional: true
-    path "versions.yml"           , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -19,9 +19,9 @@ process TILEDIMAGESEGMENTATION_MERGEOUTLINES {
     prefix = task.ext.prefix ?: "${meta.id}_merged"
     """
     merge-polygons \\
-        --wkts $outlines \\
+        --wkts ${outlines} \\
         --output_prefix "${prefix}" \\
-        $args \\
+        ${args} \\
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

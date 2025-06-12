@@ -1,5 +1,5 @@
 process TILEDIMAGESEGMENTATION_GENERATETILECOORDS {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_single'
 
     conda "${moduleDir}/environment.yml"
@@ -10,7 +10,7 @@ process TILEDIMAGESEGMENTATION_GENERATETILECOORDS {
 
     output:
     tuple val(meta), path("${output_name}"), emit: tile_coords
-    path "versions.yml"           , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when

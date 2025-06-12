@@ -1,5 +1,5 @@
 process TILEDIMAGESEGMENTATION_DEEPCELLWRAPPER {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_medium'
 
     conda "${moduleDir}/environment.yml"
@@ -10,7 +10,7 @@ process TILEDIMAGESEGMENTATION_DEEPCELLWRAPPER {
 
     output:
     tuple val(meta), path("${output_name}"), emit: wkts
-    path "versions.yml"           , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -21,13 +21,13 @@ process TILEDIMAGESEGMENTATION_DEEPCELLWRAPPER {
     output_name = "${prefix}_deepcell_outlines.wkt"
     """
     deepcell_helper.py run \\
-        $image \\
-        -x_min $x_min \\
-        -y_min $y_min \\
-        -x_max $x_max \\
-        -y_max $y_max \\
+        ${image} \\
+        -x_min ${x_min} \\
+        -y_min ${y_min} \\
+        -x_max ${x_max} \\
+        -y_max ${y_max} \\
         -output_name ${output_name} \\
-        $args
+        ${args}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
