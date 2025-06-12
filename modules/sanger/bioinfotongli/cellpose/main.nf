@@ -39,7 +39,6 @@ process BIOINFOTONGLI_CELLPOSE {
     """
 
     stub:
-    def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}-${x_min}_${y_min}_${x_max}_${y_max}-diam_${cell_diameter}"
     """
     mkdir "${prefix}"
