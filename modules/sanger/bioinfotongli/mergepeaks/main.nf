@@ -1,18 +1,18 @@
 process BIOINFOTONGLI_MERGEPEAKS {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_single'
 
     // conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'quay.io/cellgeni/imagetileprocessor:0.1.7':
-        'quay.io/cellgeni/imagetileprocessor:0.1.7' }"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'quay.io/cellgeni/imagetileprocessor:0.1.7'
+        : 'quay.io/cellgeni/imagetileprocessor:0.1.7'}"
 
     input:
     tuple val(meta), val(ch_ind), path(csvs)
 
     output:
     tuple val(meta), path("${output_name}"), emit: merged_peaks
-    path "versions.yml"           , emit: versions
+    path "versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -34,7 +34,6 @@ process BIOINFOTONGLI_MERGEPEAKS {
     """
 
     stub:
-    def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     output_name = "${prefix}_merged_peaks_ch_${ch_ind}.wkt"
     """
