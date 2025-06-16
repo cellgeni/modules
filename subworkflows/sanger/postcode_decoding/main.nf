@@ -1,17 +1,17 @@
-params.debug=false
-params.chunk_size=10000
+params.debug      = false
+params.chunk_size = 10000
 
 
 process Codebook_conversion {
     debug params.debug
-    tag "${meta.id}"
+    // tag "${meta.id}"
 
     cpus 1
     memory 100.MB
 
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        params.gmm_sif:
-        'bioinfotongli/decoding:latest'}"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? params.gmm_sif
+        : 'bioinfotongli/decoding:latest'}"
 
     storeDir params.out_dir + "/codebook_metadata"
 
@@ -22,7 +22,7 @@ process Codebook_conversion {
     path "taglist.csv", emit: taglist_name
     path "channel_info.csv", emit: channel_info_name
     /*path "channel_info.pickle", emit: channel_infos*/
-    path "versions.yml"           , emit: versions
+    path "versions.yml", emit: versions
 
     script:
     """
@@ -38,28 +38,27 @@ process Codebook_conversion {
 
 process Get_meatdata {
     debug params.debug
-    tag "${meta.id}"
+    // tag "${meta.id}"
 
     cpus 1
     memory 100.MB
 
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        params.gmm_sif:
-        'bioinfotongli/decoding:latest'}"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? params.gmm_sif
+        : 'bioinfotongli/decoding:latest'}"
 
     storeDir params.out_dir + "/codebook_metadata"
-    /*publishDir params.out_dir + "/decoding_metadata", mode:"copy"*/
 
     input:
-    path(taglist_name)
-    path(channel_info_name)
+    path taglist_name
+    path channel_info_name
 
     output:
     path "barcodes_01.npy", emit: barcodes
     path "gene_names.npy", emit: gene_names
     path "channel_info.pickle", emit: channel_infos
 
-    path "versions.yml"           , emit: versions
+    path "versions.yml", emit: versions
 
     script:
     """
@@ -75,26 +74,26 @@ process Get_meatdata {
 
 process Decode_peaks_old {
     debug params.debug
-    tag "${meta.id}"
+    // tag "${meta.id}"
     cache true
 
     cpus 1
 
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'bioinfotongli/postcode:latest':
-        'bioinfotongli/postcode:latest'}"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'bioinfotongli/postcode:latest'
+        : 'bioinfotongli/postcode:latest'}"
 
-    publishDir params.out_dir + "/decoded", mode:"copy"
+    publishDir params.out_dir + "/decoded", mode: "copy"
 
     input:
     tuple val(stem), file(spot_profile), file(spot_loc), file(barcodes_f), file(gene_names_f), file(channel_info_f)
-    val(chunk_size)
+    val chunk_size
 
     output:
-    tuple val(stem), path("${stem}_decoded_df.tsv"), emit:decoded_peaks
-    path "${stem}_decode_out_parameters.pickle" optional true
+    tuple val(stem), path("${stem}_decoded_df.tsv"), emit: decoded_peaks
+    path "${stem}_decode_out_parameters.pickle", optional: true
 
-    path "versions.yml"           , emit: versions
+    path "versions.yml", emit: versions
 
     script:
     """
@@ -115,20 +114,20 @@ process Decode_peaks {
 
     cpus 1
 
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'bioinfotongli/postcode:latest':
-        'bioinfotongli/postcode:latest'}"
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? 'bioinfotongli/postcode:latest'
+        : 'bioinfotongli/postcode:latest'}"
     publishDir params.out_dir + "/decoded"
 
     input:
     tuple val(meta), file(spot_profile), file(spot_loc), file(codebook), file(readouts)
-    val(chunk_size)
+    val chunk_size
 
     output:
-    tuple val(meta), path("${out_name}"), emit:decoded_peaks
+    tuple val(meta), path("${out_name}"), emit: decoded_peaks
     tuple val(meta), path("${prefix}_decode_out_parameters.pickle"), optional: true
 
-    path "versions.yml"           , emit: versions
+    path "versions.yml", emit: versions
 
     script:
     prefix = meta.id ?: "none_decoded"
@@ -148,9 +147,8 @@ process Decode_peaks {
 
 
 workflow POSTCODE_DECODING_OLD {
-
     take:
-    codebook // channel: [ file[ codebook ], val(channel_map), val(codebook_sep) ]
+    codebook     // channel: [ file[ codebook ], val(channel_map), val(codebook_sep) ]
     peak_profile // channel: [ val(meta), file[ peak_profile ] ]
 
     main:
@@ -161,7 +159,7 @@ workflow POSTCODE_DECODING_OLD {
     Get_meatdata(Codebook_conversion.out.taglist_name, Codebook_conversion.out.channel_info_name)
     ch_versions = ch_versions.mix(Get_meatdata.out.versions.first())
 
-    for_decoding = peak_profile 
+    for_decoding = peak_profile
         .combine(Get_meatdata.out.barcodes)
         .combine(Get_meatdata.out.gene_names)
         .combine(Get_meatdata.out.channel_infos)
@@ -170,15 +168,13 @@ workflow POSTCODE_DECODING_OLD {
     ch_versions = ch_versions.mix(Decode_peaks.out.versions.first())
 
     emit:
-    decoded_peaks      = Decode_peaks.out.decoded_peaks          // channel: [ val(meta), file[ decoded_peaks ] ]
-
-    versions = ch_versions                     // channel: [ versions.yml ]
+    decoded_peaks = Decode_peaks.out.decoded_peaks // channel: [ val(meta), file[ decoded_peaks ] ]
+    versions      = ch_versions // channel: [ versions.yml ]
 }
 
 workflow POSTCODE_DECODING {
-
     take:
-    to_decode  // channel: [ val(meta), file[ peak_profile ], file[ spot_loc], file[ codebook ] ]
+    to_decode // channel: [ val(meta), file[ peak_profile ], file[ spot_loc], file[ codebook ] ]
 
     main:
     ch_versions = Channel.empty()
@@ -187,6 +183,6 @@ workflow POSTCODE_DECODING {
     ch_versions = ch_versions.mix(Decode_peaks.out.versions.first())
 
     emit:
-    decoded_peaks      = Decode_peaks.out.decoded_peaks          // channel: [ val(meta), file[ decoded_peaks ] ]
-    versions = ch_versions                     // channel: [ versions.yml ]
+    decoded_peaks = Decode_peaks.out.decoded_peaks // channel: [ val(meta), file[ decoded_peaks ] ]
+    versions      = ch_versions // channel: [ versions.yml ]
 }
