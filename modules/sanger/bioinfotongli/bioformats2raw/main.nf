@@ -1,13 +1,11 @@
-VERSION = '0.9.1'
-
 process BIOINFOTONGLI_BIOFORMATS2RAW {
     tag "${meta.id}"
     label 'process_medium'
 
-    conda (params.enable_conda ? "-c ome bioformats2raw==${VERSION}" : null)
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        "bioinfotongli/bioformats2raw:${VERSION}":
-        "bioinfotongli/bioformats2raw:${VERSION}" }"
+    conda params.enable_conda ? "-c ome bioformats2raw==0.9.1" : null
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? "bioinfotongli/bioformats2raw:0.9.1"
+        : "bioinfotongli/bioformats2raw:0.9.1"}"
     publishDir params.out_dir
 
     input:
@@ -28,9 +26,9 @@ process BIOINFOTONGLI_BIOFORMATS2RAW {
     def args = task.ext.args ?: ''
     """
     /opt/conda/bin/bioformats2raw \\
-        --max_workers=$task.cpus \\
-        $args \\
-        $img \\
+        --max_workers=${task.cpus} \\
+        ${args} \\
+        ${img} \\
         "${stem}.zarr"
 
     cat <<-END_VERSIONS > bioformats2raw_versions.yml

@@ -1,22 +1,19 @@
-VERSION = '0.5.0'
-DOCKERHUB_IMAGE = "bioinfotongli/raw2ometiff:${VERSION}"
-
 process BIOINFOTONGLI_RAW2OMETIFF {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_medium'
 
     /*conda (params.enable_conda ? "-c ome raw2ometiff=${VERSION}" : null)*/
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        "${DOCKERHUB_IMAGE}":
-        "${DOCKERHUB_IMAGE}" }"
-    publishDir params.out_dir , mode: 'copy'
+    container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
+        ? "bioinfotongli/raw2ometiff:0.5.0"
+        : "bioinfotongli/raw2ometiff:0.5.0"}"
+    publishDir params.out_dir, mode: 'copy'
 
     input:
     tuple val(meta), path(ome_zarr)
 
     output:
     tuple val(meta), path("${meta.id}.ome.tif"), emit: ome_tif
-    path "raw2ometiff_versions.yml"           , emit: versions
+    path "raw2ometiff_versions.yml", emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -28,9 +25,9 @@ process BIOINFOTONGLI_RAW2OMETIFF {
     def args = task.ext.args ?: ''
     """
     raw2ometiff \\
-        --max_workers=$task.cpus \\
-        $args \\
-        $ome_zarr \\
+        --max_workers=${task.cpus} \\
+        ${args} \\
+        ${ome_zarr} \\
         ${meta.id}.ome.tif
 
     cat <<-END_VERSIONS > raw2ometiff_versions.yml
