@@ -1,20 +1,20 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
-name: "bioinfotongli_stardist"
+name: "imaging_stardist"
 description: a wrapper for starDist
 keywords:
   - segmentation
   - image analysis
   - starDist
 tools:
-  - "bioinfotongli":
+  - "imaging":
       description: "A wrapper for starDist"
       homepage: ""
       documentation: ""
       tool_dev_url: ""
       doi: ""
-      licence: 
-      identifier: 
+      licence:
+      identifier:
 
 input:
   - - meta:
@@ -41,22 +41,22 @@ input:
 
 output:
   - outlines:
-    - meta:
-        type: map
-        description: |
-          Groovy Map containing sample information
-          e.g. `[ id:'sample1', single_end:false ]`
+      - meta:
+          type: map
+          description: |
+            Groovy Map containing sample information
+            e.g. `[ id:'sample1', single_end:false ]`
 
-    - "*.wkt":
-        type: file
-        description: WKT file
-        pattern: "*.wkt"
-          
+      - "*.wkt":
+          type: file
+          description: WKT file
+          pattern: "*.wkt"
+
   - versions:
-    - "versions.yml":
-        type: file
-        description: File containing software versions
-        pattern: "versions.yml"
+      - "versions.yml":
+          type: file
+          description: File containing software versions
+          pattern: "versions.yml"
 
 authors:
   - "@BioinfoTongLI"

@@ -1,22 +1,22 @@
 // TODO nf-core: Once you have added the required tests, please run the following command to build this file:
-// nf-core modules test bioinfotongli/stardist
+// nf-core modules test imaging/stardist
 nextflow_process {
 
-    name "Test Process BIOINFOTONGLI_STARDIST"
+    name "Test Process IMAGING_STARDIST"
     script "../main.nf"
-    process "BIOINFOTONGLI_STARDIST"
+    process "IMAGING_STARDIST"
 
     tag "modules"
     tag "modules_sanger"
-    tag "bioinfotongli"
-    tag "bioinfotongli/stardist"
+    tag "imaging"
+    tag "imaging/stardist"
 
     test("stardist - tif") {
 
         when {
             process {
                 """
-                
+
                 input[0] = [
                     [ id:'test' ], // meta map
                     0,  0, 500, 500, // x_min, x_max, y_min, y_max

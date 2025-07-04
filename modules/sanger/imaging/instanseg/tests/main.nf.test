@@ -1,13 +1,13 @@
 nextflow_process {
 
-    name "Test Process BIOINFOTONGLI_INSTANSEG"
+    name "Test Process IMAGING_INSTANSEG"
     script "../main.nf"
-    process "BIOINFOTONGLI_INSTANSEG"
+    process "IMAGING_INSTANSEG"
 
     tag "modules"
     tag "modules_sanger"
-    tag "bioinfotongli"
-    tag "bioinfotongli/instanseg"
+    tag "imaging"
+    tag "imaging/instanseg"
 
     test("mouse_heart - tiff") {
 

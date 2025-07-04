@@ -17,20 +17,23 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-VERSION="0.1.3"
+VERSION = "0.1.3"
 
 
 def main(
-        image:str,
-        x_min:int, x_max:int, y_min:int, y_max:int,
-        out_dir:str,
-        cell_diameter:int=30,
-        cellpose_model:str="cyto3",
-        zs:list=[0],
-        channels:list=[0, 0],
-        resolution_level:int=0,
-        **cp_params
-    ):
+    image: str,
+    x_min: int,
+    x_max: int,
+    y_min: int,
+    y_max: int,
+    out_dir: str,
+    cell_diameter: int = 30,
+    cellpose_model: str = "cyto3",
+    zs: list = [0],
+    channels: list = [0, 0],
+    resolution_level: int = 0,
+    **cp_params,
+):
 
     crop = slice_and_crop_image(
         image, x_min, x_max, y_min, y_max, zs, np.array(channels), resolution_level
@@ -80,7 +83,7 @@ def main(
     outline_file = glob(f"{out_dir}/*_cp_outlines.txt")
 
     if len(outline_file) > 0:
-    # if os.path.exists(outlines_file):
+        # if os.path.exists(outlines_file):
         wkts = []
         with open(outline_file[0], "rt") as f:
             for line in f.readlines():

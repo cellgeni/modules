@@ -1,14 +1,14 @@
 nextflow_process {
 
-    name "Test Process BIOINFOTONGLI_CELLPOSE"
+    name "Test Process IMAGING_CELLPOSE"
     script "../main.nf"
     config "./nextflow.config"
-    process "BIOINFOTONGLI_CELLPOSE"
+    process "IMAGING_CELLPOSE"
 
     tag "modules"
     tag "modules_sanger"
-    tag "bioinfotongli"
-    tag "bioinfotongli/cellpose"
+    tag "imaging"
+    tag "imaging/cellpose"
 
     test("mouse_heart - tiff - 500") {
 

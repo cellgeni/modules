@@ -1,9 +1,9 @@
-include { BIOINFOTONGLI_CELLPOSE as CELLPOSE } from '../../../modules/sanger/bioinfotongli/cellpose/main'
-include { BIOINFOTONGLI_STARDIST as STARDIST } from '../../../modules/sanger/bioinfotongli/stardist/main'
-include { BIOINFOTONGLI_INSTANSEG as INSTANSEG } from '../../../modules/sanger/bioinfotongli/instanseg/main'
-include { BIOINFOTONGLI_DEEPCELL as DEEPCELL } from '../../../modules/sanger/bioinfotongli/deepcell/main'
-include { MERGEOUTLINES } from '../../../modules/sanger/mergeoutlines/main'
-include { BIOINFOTONGLI_GENERATETILES as GENERATE_TILE_COORDS } from '../../../modules/sanger/bioinfotongli/generatetiles/main'
+include { IMAGING_CELLPOSE as CELLPOSE                  } from '../../../modules/sanger/imaging/cellpose/main'
+include { IMAGING_STARDIST as STARDIST                  } from '../../../modules/sanger/imaging/stardist/main'
+include { IMAGING_INSTANSEG as INSTANSEG                } from '../../../modules/sanger/imaging/instanseg/main'
+include { IMAGING_DEEPCELL as DEEPCELL                  } from '../../../modules/sanger/imaging/deepcell/main'
+include { MERGEOUTLINES                                 } from '../../../modules/sanger/mergeoutlines/main'
+include { IMAGING_GENERATETILES as GENERATE_TILE_COORDS } from '../../../modules/sanger/imaging/generatetiles/main'
 
 
 workflow TILED_SEGMENTATION {
@@ -49,6 +49,6 @@ workflow TILED_SEGMENTATION {
     ch_versions = ch_versions.mix(MERGEOUTLINES.out.versions.first())
 
     emit:
-    geojson = MERGEOUTLINES.out.multipoly_geojsons // channel: [ val(meta), [ geojson ] ]
+    geojson  = MERGEOUTLINES.out.multipoly_geojsons // channel: [ val(meta), [ geojson ] ]
     versions = ch_versions // channel: [ versions.yml ]
 }

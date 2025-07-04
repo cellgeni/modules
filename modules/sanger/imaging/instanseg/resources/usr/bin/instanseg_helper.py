@@ -16,6 +16,7 @@ from shapely.affinity import translate
 from imagetileprocessor import slice_and_crop_image
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -51,11 +52,9 @@ def get_shapely(label):
             continue
         cur_cell_label = i + 1
         msk = (label[bbox[0], bbox[1]] == cur_cell_label).astype(np.uint8).copy()
-        cnts, _ = cv2.findContours(
-            msk, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE
-        )
+        cnts, _ = cv2.findContours(msk, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         # if len(cnts) > 1:
-            # print(len(cnts), cur_cell_label)
+        # print(len(cnts), cur_cell_label)
         current_polygons = [
             Polygon((cnt + [bbox[1].start, bbox[0].start]).squeeze())
             #             else Point((cnt + [bbox[1].start, bbox[0].start]).squeeze())
@@ -71,23 +70,36 @@ def get_shapely(label):
 
 
 def main(
-        image_path: str,
-        x_min: int, x_max: int, y_min: int, y_max: int,
-        output_name: str,
-        model: str = "fluorescence_nuclei_and_cells",
-        C: list = [0],
-        Z: list = [0],
-    ):
+    image_path: str,
+    x_min: int,
+    x_max: int,
+    y_min: int,
+    y_max: int,
+    output_name: str,
+    model: str = "fluorescence_nuclei_and_cells",
+    C: list = [0],
+    Z: list = [0],
+):
     instanseg_fluorescence = InstanSeg(model, verbosity=1)
 
     crop = slice_and_crop_image(
-        image_path, x_min, x_max, y_min, y_max,
-        channel=np.array([C]), zs=np.array([Z]), resolution_level=0
+        image_path,
+        x_min,
+        x_max,
+        y_min,
+        y_max,
+        channel=np.array([C]),
+        zs=np.array([Z]),
+        resolution_level=0,
     )
 
     labeled_output = instanseg_fluorescence.eval_small_image(
-        np.array(crop).astype(np.uint16), None, return_image_tensor=False, target="nuclei",
-        resolve_cell_and_nucleus=False, cleanup_fragments = True
+        np.array(crop).astype(np.uint16),
+        None,
+        return_image_tensor=False,
+        target="nuclei",
+        resolve_cell_and_nucleus=False,
+        cleanup_fragments=True,
     )
     polys = get_shapely(np.squeeze(np.array(labeled_output)).astype(np.uint16))
     with open(output_name, "wt") as f:
@@ -96,7 +108,7 @@ def main(
                 translate(MultiPolygon(list(polys[1].values())), xoff=x_min, yoff=y_min)
             )
         )
-    
+
 
 if __name__ == "__main__":
     options = {

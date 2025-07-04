@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/yaml-schema.json
-name: "bioinfotongli_cellpose"
+name: "imaging_cellpose"
 description: A wrapper of Cellpose: a generalist algorithm for cellular segmentation
 keywords:
   - segmentation
@@ -8,7 +8,7 @@ keywords:
   - image_analysis
   - deep-learning
 tools:
-  - "bioinfotongli":
+  - "imaging":
       description: "cellpose is an anatomical segmentation algorithm written in Python 3 by Carsen Stringer and Marius Pachitariu."
       homepage: "https://www.cellpose.org/"
       documentation: "https://cellpose.readthedocs.io/en/latest/"
@@ -38,7 +38,7 @@ input:
   - y_max:
       type: integer
       description: y_max of the region of interest
-  
+
   - imgs:
       type: file
       description: raw images for segmentation
@@ -47,7 +47,7 @@ input:
   - cell_diameter:
       type: integer
       description: expected cell diameter in pixels
-  
+
 output:
   - meta:
       type: map
@@ -62,17 +62,17 @@ output:
 
   - "${stem}/${stem}_cp_outlines.txt":
       type: file
-      description: 
+      description:
       pattern: "*.txt"
 
   - "${stem}/${stem}_cp_outlines.wkt":
       type: file
-      description: 
+      description:
       pattern: "*.wkt"
 
   - "${stem}/${stem}*png":
       type: file
-      description: 
+      description:
       pattern: "*.png"
 authors:
   - "@BioinfoTongLI"

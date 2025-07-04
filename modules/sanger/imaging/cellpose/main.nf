@@ -1,4 +1,4 @@
-process BIOINFOTONGLI_CELLPOSE {
+process IMAGING_CELLPOSE {
     tag "${meta.id}"
 
     label "medium_mem"
@@ -46,7 +46,7 @@ process BIOINFOTONGLI_CELLPOSE {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(cellpose_seg.py version)
+        imaging: \$(cellpose_seg.py version)
     END_VERSIONS
     """
 }
