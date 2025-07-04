@@ -1,25 +1,24 @@
-// nf-core modules test bioinfotongli/concatenatewkts
+// nf-core modules test IMAGING/generatetiles
 nextflow_process {
 
-    name "Test Process BIOINFOTONGLI_CONCATENATEWKTS"
+    name "Test Process IMAGING_GENERATETILES"
     script "../main.nf"
-    process "BIOINFOTONGLI_CONCATENATEWKTS"
+    config "./nextflow.config"
+    process "IMAGING_GENERATETILES"
 
     tag "modules"
     tag "modules_sanger"
-    tag "bioinfotongli"
-    tag "bioinfotongli/concatenatewkts"
+    tag "imaging"
+    tag "imaging/generatetiles"
 
-    test("mouse heart - wkt ") {
+    test("mouse_heart - tiff") {
 
         when {
             process {
                 """
                 input[0] = [
-                    [ id:'test' ], // meta map
-                    [
-                        file(params.modules_testdata_base_path + 'test_merged_peaks_ch_-1.wkt', checkIfExists: true),
-                    ]
+                    [ id:'test'], // meta map
+                    file(params.modules_testdata_base_path + 'imaging/tiff/mindagap.mouse_heart.wga.tiff', checkIfExists: true),
                 ]
                 """
             }
@@ -34,7 +33,7 @@ nextflow_process {
 
     }
 
-    test("mouse heart - wkt - stub") {
+    test("mouse_heart - tiff - stub") {
 
         options "-stub"
 
@@ -42,10 +41,8 @@ nextflow_process {
             process {
                 """
                 input[0] = [
-                    [ id:'test' ], // meta map
-                    [
-                        file(params.modules_testdata_base_path + 'test_merged_peaks_ch_-1.wkt', checkIfExists: true),
-                    ]
+                    [ id:'test',], // meta map
+                    file(params.modules_testdata_base_path + 'imaging/tiff/mindagap.mouse_heart.wga.tiff', checkIfExists: true),
                 ]
                 """
             }

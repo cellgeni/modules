@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
-name: "bioinfotongli_tiledspotiflow"
+name: "imaging_tiledspotiflow"
 description: run spotiflow on tiled data
 keywords:
   - peak calling
@@ -8,14 +8,14 @@ keywords:
   - tiled data
   - spotiflow
 tools:
-  - "bioinfotongli":
+  - "imaging":
       description: ""
       homepage: ""
       documentation: ""
       tool_dev_url: ""
       doi: ""
-      licence: 
-      identifier: 
+      licence:
+      identifier:
 
 input:
   - meta:
@@ -23,7 +23,7 @@ input:
         description: |
           Groovy Map containing sample information
           e.g. `[ id:'sample1']`
-  
+
   - imgs:
       type: file
       description: raw images for segmentation
@@ -32,13 +32,13 @@ input:
           - edam: "http://edamontology.org/format_3727"
 
   - bounding_box:
-      type: int 
+      type: int
       description: bounding box for each tile
 
   - channel_index:
       type: int
-      description: channel index for peak calling 
-          
+      description: channel index for peak calling
+
 
 output:
   - bam:
@@ -55,7 +55,7 @@ output:
         pattern: "*.csv"
         ontologies:
           - edam: "http://edamontology.org/format_3752"
-          
+
   - versions:
     - "versions.yml":
         type: file

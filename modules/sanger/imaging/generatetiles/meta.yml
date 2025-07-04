@@ -1,20 +1,20 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
-name: "bioinfotongli_generatetiles"
+name: "imaging_generatetiles"
 description: a helper script to generate tiles from an 2D image file
 keywords:
   - image
   - tiling
   - slicing
 tools:
-  - "bioinfotongli":
+  - "imaging":
       description: "A simple script to generate tiles from an 2D image file"
       homepage: ""
       documentation: ""
       tool_dev_url: ""
       doi: ""
       licence: MIT
-      identifier: 
+      identifier:
 
 input:
   - - meta:
@@ -44,8 +44,6 @@ output:
       type: file
       description: File containing software versions
       pattern: "versions.yml"
-
-  
 
 authors:
   - "@BioinfoTongLI"

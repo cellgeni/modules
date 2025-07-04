@@ -1,4 +1,4 @@
-process BIOINFOTONGLI_GENERATETILES {
+process IMAGING_GENERATETILES {
     tag "${meta.id}"
 
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
@@ -24,7 +24,7 @@ process BIOINFOTONGLI_GENERATETILES {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(tile-2d-image version)
+        IMAGING: \$(tile-2d-image version)
     END_VERSIONS
     """
 
@@ -36,7 +36,7 @@ process BIOINFOTONGLI_GENERATETILES {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(tile-2d-image version)
+        IMAGING: \$(tile-2d-image version)
     END_VERSIONS
     """
 }

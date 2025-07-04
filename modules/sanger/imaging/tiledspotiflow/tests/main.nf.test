@@ -1,14 +1,14 @@
-// nf-core modules test bioinfotongli/tiledspotiflow
+// nf-core modules test IMAGING/tiledspotiflow
 nextflow_process {
 
-    name "Test Process BIOINFOTONGLI_TILEDSPOTIFLOW"
+    name "Test Process IMAGING_TILEDSPOTIFLOW"
     script "../main.nf"
-    process "BIOINFOTONGLI_TILEDSPOTIFLOW"
+    process "IMAGING_TILEDSPOTIFLOW"
 
     tag "modules"
     tag "modules_sanger"
-    tag "bioinfotongli"
-    tag "bioinfotongli/tiledspotiflow"
+    tag "IMAGING"
+    tag "IMAGING/tiledspotiflow"
 
     test("mouse_heart - tiff") {
 

@@ -1,4 +1,4 @@
-process BIOINFOTONGLI_TILEDSPOTIFLOW {
+process IMAGING_TILEDSPOTIFLOW {
     tag "${meta.id}"
 
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
@@ -28,7 +28,7 @@ process BIOINFOTONGLI_TILEDSPOTIFLOW {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(Spotiflow_call_peaks.py version)
+        IMAGING: \$(Spotiflow_call_peaks.py version)
     END_VERSIONS
     """
 
@@ -39,7 +39,7 @@ process BIOINFOTONGLI_TILEDSPOTIFLOW {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(Spotiflow_call_peaks.py version)
+        IMAGING: \$(Spotiflow_call_peaks.py version)
     END_VERSIONS
     """
 }

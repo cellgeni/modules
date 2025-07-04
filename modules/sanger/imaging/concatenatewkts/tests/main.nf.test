@@ -1,26 +1,24 @@
-// nf-core modules test bioinfotongli/mergepeaks
+// nf-core modules test imaging/concatenatewkts
 nextflow_process {
 
-    name "Test Process BIOINFOTONGLI_MERGEPEAKS"
+    name "Test Process IMAGING_CONCATENATEWKTS"
     script "../main.nf"
-    process "BIOINFOTONGLI_MERGEPEAKS"
+    process "IMAGING_CONCATENATEWKTS"
 
     tag "modules"
     tag "modules_sanger"
-    tag "bioinfotongli"
-    tag "bioinfotongli/mergepeaks"
+    tag "imaging"
+    tag "imaging/concatenatewkts"
 
-    test("dummy - csv ") {
+    test("mouse heart - wkt ") {
 
         when {
             process {
                 """
                 input[0] = [
                     [ id:'test' ], // meta map
-                    0,
                     [
-                        file(params.modules_testdata_base_path + 'mouse_heart_ch_0_peaks_Y0_X0.csv', checkIfExists: true),
-                        file(params.modules_testdata_base_path + 'mouse_heart_ch_0_peaks_Y0_X0_.csv', checkIfExists: true),
+                        file(params.modules_testdata_base_path + 'test_merged_peaks_ch_-1.wkt', checkIfExists: true),
                     ]
                 ]
                 """
@@ -36,7 +34,7 @@ nextflow_process {
 
     }
 
-    test("dummy - csv - stub") {
+    test("mouse heart - wkt - stub") {
 
         options "-stub"
 
@@ -45,10 +43,8 @@ nextflow_process {
                 """
                 input[0] = [
                     [ id:'test' ], // meta map
-                    0,
                     [
-                        file(params.modules_testdata_base_path + 'mouse_heart_ch_0_peaks_Y0_X0.csv', checkIfExists: true),
-                        file(params.modules_testdata_base_path + 'mouse_heart_ch_0_peaks_Y0_X0_.csv', checkIfExists: true),
+                        file(params.modules_testdata_base_path + 'test_merged_peaks_ch_-1.wkt', checkIfExists: true),
                     ]
                 ]
                 """
