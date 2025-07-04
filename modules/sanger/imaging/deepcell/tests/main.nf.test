@@ -1,14 +1,14 @@
-// nf-core modules test bioinfotongli/deepcell
+// nf-core modules test imaging/deepcell
 nextflow_process {
 
-    name "Test Process BIOINFOTONGLI_DEEPCELL"
+    name "Test Process IMAGING_DEEPCELL"
     script "../main.nf"
-    process "BIOINFOTONGLI_DEEPCELL"
+    process "IMAGING_DEEPCELL"
 
     tag "modules"
     tag "modules_sanger"
-    tag "bioinfotongli"
-    tag "bioinfotongli/deepcell"
+    tag "imaging"
+    tag "imaging/deepcell"
 
     test("mouse_heart - tiff") {
 

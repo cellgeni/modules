@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2025 Wellcome Sanger Institute
 
-"""
-"""
+""" """
 import fire
 from deepcell.applications import NuclearSegmentation
 import numpy as np
@@ -18,6 +17,7 @@ import zarr
 from imagetileprocessor import slice_and_crop_image
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -35,7 +35,7 @@ def get_largest_polygon(multi_polygon: MultiPolygon):
             largest_area = area
         largest_polygon = polygon
     if largest_polygon is None:
-        return multi_polygon 
+        return multi_polygon
     else:
         return largest_polygon
 
@@ -52,11 +52,9 @@ def get_shapely(label):
             continue
         cur_cell_label = i + 1
         msk = (label[bbox[0], bbox[1]] == cur_cell_label).astype(np.uint8).copy()
-        cnts, _ = cv2.findContours(
-            msk, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE
-        )
+        cnts, _ = cv2.findContours(msk, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         # if len(cnts) > 1:
-            # print(len(cnts), cur_cell_label)
+        # print(len(cnts), cur_cell_label)
         current_polygons = [
             Polygon((cnt + [bbox[1].start, bbox[0].start]).squeeze())
             #             else Point((cnt + [bbox[1].start, bbox[0].start]).squeeze())
@@ -72,12 +70,15 @@ def get_shapely(label):
 
 
 def main(
-        image_path: str,
-        x_min: int, x_max: int, y_min: int, y_max: int,
-        output_name: str,
-        C: int = 0,
-        Z: int = 0,
-    ):
+    image_path: str,
+    x_min: int,
+    x_max: int,
+    y_min: int,
+    y_max: int,
+    output_name: str,
+    C: int = 0,
+    Z: int = 0,
+):
     model_dir = Path.home() / ".deepcell" / "models"
     # model_path = model_dir / MODEL_NAME
     model_path = model_dir / "NuclearSegmentation"
@@ -88,9 +89,16 @@ def main(
     # crop = img.get_image_dask_data("TYXC", Z=Z, T=T, C=C)[:, y_min:y_max, x_min:x_max, :]
 
     crop = slice_and_crop_image(
-        image_path, x_min, x_max, y_min, y_max, zs=np.array([Z]), channel=np.array([C]), resolution_level=0
+        image_path,
+        x_min,
+        x_max,
+        y_min,
+        y_max,
+        zs=np.array([Z]),
+        channel=np.array([C]),
+        resolution_level=0,
     )
-    if crop.ndim == 2: # special channel setting required by deepcell
+    if crop.ndim == 2:  # special channel setting required by deepcell
         crop = np.expand_dims(crop, axis=[-1, 0])
     segmentation_predictions = app.predict(
         np.array(crop).astype(np.uint16), image_mpp=0.5
@@ -103,7 +111,7 @@ def main(
                 translate(MultiPolygon(list(polys[1].values())), xoff=x_min, yoff=y_min)
             )
         )
-    
+
 
 if __name__ == "__main__":
     options = {

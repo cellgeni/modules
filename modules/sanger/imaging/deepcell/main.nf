@@ -1,4 +1,4 @@
-process BIOINFOTONGLI_DEEPCELL {
+process IMAGING_DEEPCELL {
     tag "${meta.id}"
     label 'process_medium'
 
@@ -33,7 +33,7 @@ process BIOINFOTONGLI_DEEPCELL {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(deepcell_helper.py version)
+        imaging: \$(deepcell_helper.py version)
     END_VERSIONS
     """
 
@@ -45,7 +45,7 @@ process BIOINFOTONGLI_DEEPCELL {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        bioinfotongli: \$(deepcell_helper.py version)
+        imaging: \$(deepcell_helper.py version)
     END_VERSIONS
     """
 }
